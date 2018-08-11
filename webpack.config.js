@@ -1,28 +1,30 @@
-//webpack.config.js
+// webpack.config.js
 const path = require('path');
+// eslint-disable-next-line
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/client/index.js',
+  entry: './src/index.js',
   output: {
     path: path.join(__dirname, 'client'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [{
-      test: /.jsx?$/,
+      test: /\.jsx?$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
       query: {
-        presets: ['es2015', 'react']
-      }
+        presets: ['es2015', 'react'],
+      },
     },
     {
       test: /\.css$/,
-      loader: "style-loader!css-loader"
-    }]
+      loader: 'style-loader!css-loader',
+    }],
   },
   resolve: {
     modules: ['src', 'src/common', 'src/server', 'src/client', 'node_modules'],
-  }
-}
+    extensions: ['.js', '.jsx'],
+  },
+};
