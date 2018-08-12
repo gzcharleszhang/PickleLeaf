@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const app = express();
 
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 const router = require('./routes/routes.js');
 
 app.use(morgan('dev'));
@@ -24,7 +25,10 @@ if (process.env.NODE_ENV === 'production') {
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 
-mongoose.connect('mongodb://fit-connect-creator:ilovecs246@ds139970.mlab.com:39970/fit-connect');
+const MONGO_URL = 'mongodb://fit-connect-creator:ilovecs246@ds139970.mlab.com:39970/fit-connect';
+mongoose.connect(MONGO_URL, { promiseLibrary: require('bluebird') })
+  .then(() => console.log('successfully connected to mongo'))
+  .catch(err => console.log(err));
 
 app.use('/api', router);
 
