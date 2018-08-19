@@ -1,10 +1,11 @@
 import React from 'react';
 import { AppBar } from '@material-ui/core';
+import './TopBar.scss';
 
-export default class Main extends React.Component {
+export default class TopBar extends React.Component {
   render() {
     return (
-      <AppBar>
+      <AppBar className="top-bar-root">
         <div>
           Hi
         </div>

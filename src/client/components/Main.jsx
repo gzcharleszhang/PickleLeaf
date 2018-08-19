@@ -6,10 +6,12 @@ import Register from './Register';
 export default class Main extends React.Component {
   render() {
     return (
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/register" component={Register} />
-      </Switch>
+      <div className="main-root">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/register" component={Register} />
+        </Switch>
+      </div>
     );
   }
 }

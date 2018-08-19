@@ -21,6 +21,10 @@ module.exports = {
     {
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
+    },
+    {
+      test: /\.scss$/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
     }],
   },
   resolve: {
@@ -35,8 +39,10 @@ module.exports = {
   devServer: {
     host: 'localhost',
     port: 3000,
+    publicPath: '/',
+    historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:8000/api',
+      '/api': 'http://localhost:8000/',
     },
     open: true,
   },
