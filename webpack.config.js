@@ -2,8 +2,10 @@
 const path = require('path');
 // eslint-disable-next-line
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.js',
   output: {
     path: path.join(__dirname, 'client'),
@@ -12,19 +14,36 @@ module.exports = {
   module: {
     rules: [{
       test: /\.jsx?$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/,
-      query: {
-        presets: ['es2015', 'react'],
+      use: {
+        loader: 'babel-loader',
       },
+      exclude: /node_modules/,
     },
     {
       test: /\.css$/,
-      loader: 'style-loader!css-loader',
+      use: ['style-loader', 'css-loader'],
     }],
   },
   resolve: {
-    modules: ['src', 'src/common', 'src/server', 'src/client', 'node_modules'],
+    modules: ['src', 'src/client', 'node_modules'],
     extensions: ['.js', '.jsx'],
+    alias: {
+      client: path.resolve(__dirname, './src/client'),
+      server: path.resolve(__dirname, './src/server'),
+      common: path.resolve(__dirname, './src/common'),
+    },
   },
+  devServer: {
+    host: 'localhost',
+    port: 3000,
+    proxy: {
+      '/api': 'http://localhost:8000/api',
+    },
+    open: true,
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+  ],
 };

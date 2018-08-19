@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+require('dotenv').config();
 
 const app = express();
 
@@ -13,20 +14,16 @@ const router = require('./routes/routes.js');
 app.use(morgan('dev'));
 
 app.set('view engine', 'html');
-
-if (process.env.NODE_ENV === 'production') {
-  app.set('views', path.join(__dirname, '../public'));
-  app.use(express.static(path.join(__dirname, '../public')));
-  app.get('/', (req, res) => {
-    res.render('index');
-  });
-}
+app.set('views', path.join(__dirname, '../../public'));
+app.use(express.static(path.join(__dirname, '../../public')));
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 
-const MONGO_URL = 'mongodb://fit-connect-creator:ilovecs246@ds139970.mlab.com:39970/fit-connect';
-mongoose.connect(MONGO_URL, { promiseLibrary: require('bluebird') })
+mongoose.connect(process.env.MONGO_URL, { promiseLibrary: require('bluebird') })
   .then(() => console.log('successfully connected to mongo'))
   .catch(err => console.log(err));
 
