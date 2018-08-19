@@ -14,11 +14,13 @@ const router = require('./routes/routes.js');
 app.use(morgan('dev'));
 
 app.set('view engine', 'html');
-app.set('views', path.join(__dirname, '../../public'));
-app.use(express.static(path.join(__dirname, '../../public')));
-app.get('/', (req, res) => {
-  res.render('index');
-});
+if (process.env.NODE_ENV === 'production') {
+  app.set('views', path.join(__dirname, '../../public'));
+  app.use(express.static(path.join(__dirname, '../../public')));
+  app.get('/', (req, res) => {
+    res.render('index');
+  });
+}
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));

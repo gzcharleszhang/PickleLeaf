@@ -8,8 +8,7 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js',
   output: {
-    path: path.join(__dirname, 'client'),
-    filename: 'bundle.js',
+    filename: './dist/bundle.js',
   },
   module: {
     rules: [{
@@ -25,7 +24,7 @@ module.exports = {
     }],
   },
   resolve: {
-    modules: ['src', 'src/client', 'node_modules'],
+    modules: ['src', 'node_modules'],
     extensions: ['.js', '.jsx'],
     alias: {
       client: path.resolve(__dirname, './src/client'),
