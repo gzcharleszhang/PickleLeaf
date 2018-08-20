@@ -1,11 +1,10 @@
-const logout = () => {
+export const logout = () => {
   localStorage.removeItem('jwtToken');
   window.location.reload();
 };
 
-const isAuthenticated = () => localStorage.getItem('jwtToken');
+export const isAuthenticated = () => !!localStorage.getItem('jwtToken');
 
-module.exports = {
-  logout,
-  isAuthenticated,
-};
+export const getAuthHeaders = () => ({
+  authorization: localStorage.getItem('jwtToken'),
+});

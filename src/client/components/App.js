@@ -6,7 +6,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { teal } from '@material-ui/core/colors';
 import '../App.css';
 import Main from './Main';
-import TopBar from './TopBar';
+import TopBar from 'client/components/TopBar/TopBar';
 
 const store = makeStore();
 
