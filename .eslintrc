@@ -27,6 +27,7 @@
     "no-extra-semi": 1,
     "eol-last": 0,
     "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
-    "no-console": 0
+    "no-console": 0,
+    "react/jsx-one-expression-per-line": 0
   }
 }

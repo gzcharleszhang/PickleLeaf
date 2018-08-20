@@ -1,0 +1,36 @@
+.sign-in-modal-root {
+  width: 300px;
+  padding: 20px 30px 40px 30px;
+  display: flex;
+  flex-direction: column;
+  
+  .form-item {
+    margin: 10px 0;
+  }
+  .name-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .first-name-input {
+      margin-right: 5px;
+    }
+    .last-name-input {
+      margin-left: 5px;
+    }
+  }
+  .change-mode-container {
+    margin-top: 20px;
+
+    .change-mode-text {
+      margin: 0 3px;
+      text-decoration-line: underline;
+      cursor: pointer;
+      color: #009688;
+      transition: color ease-out 0.1s;
+      &:hover {
+        color: black;
+      }
+    }
+  }
+}
