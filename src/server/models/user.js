@@ -28,22 +28,21 @@ const userSchema = new Schema({
 
 userSchema.pre('save', (next) => {
   const user = this;
-  if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) {
-        next(err);
+  console.log(user);
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    bcrypt.hash(user.password, salt, null, (e, hash) => {
+      if (e) {
+        next(e);
         return;
       }
-      bcrypt.hash(user.password, salt, null, (e, hash) => {
-        if (e) {
-          next(e);
-          return;
-        }
-        user.password = hash;
-        next();
-      });
+      user.password = hash;
+      next();
     });
-  }
+  });
 });
 
 userSchema.methods.comparePassword = password => new Promise(

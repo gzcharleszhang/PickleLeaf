@@ -7,7 +7,9 @@ import {
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import SignInModalContainer from 'client/containers/SignInModalContainer';
-import { SignInModalMode } from 'common/constants';
+import { SignInModalMode, MessageTypes } from 'common/constants';
+import { registerUser } from 'client/util/Auth';
+import { showMessage } from 'client/components/Message/Message';
 import './SignInModal.scss';
 
 class SignInModal extends Component {
@@ -44,22 +46,48 @@ class SignInModal extends Component {
   }
 
   handleButtonClick = () => {
-    const { signInModalMode } = this.props;
+    const { signInModalMode, hideSignInModal } = this.props;
     const isSignUp = signInModalMode === SignInModalMode.SignUp;
     let fieldsToCheck = ['email', 'password'];
     if (isSignUp) {
       fieldsToCheck = fieldsToCheck.concat(['firstName', 'lastName', 'confirmEmail', 'confirmPassword']);
     }
     const newState = {};
+    let valid = true;
     fieldsToCheck.forEach((key) => {
       // eslint-disable-next-line react/destructuring-assignment
       const field = this.state[key];
       if (!field) {
         const errKey = `${key}Err`;
         newState[errKey] = 'This field is empty';
+        valid = false;
       }
     });
-    this.setState(newState);
+    if (!valid) {
+      this.setState(newState);
+    } else if (isSignUp) {
+      this.setState({ isLoading: true });
+      const {
+        firstName, lastName, email, password,
+      } = this.state;
+      const user = {
+        firstName,
+        lastName,
+        email,
+        password,
+      };
+      registerUser(user).then((res) => {
+        this.setState({ isLoading: false });
+        const { success } = res.data;
+        if (success) {
+          showMessage(MessageTypes.Success, 'You have successfully signed up');
+          hideSignInModal();
+          this.resetFields();
+        } else {
+          showMessage(MessageTypes.Error, 'User already exists');
+        }
+      });
+    }
   }
 
   handleOnClose = () => {
@@ -67,6 +95,52 @@ class SignInModal extends Component {
     onClose();
     hideSignInModal();
     // reset state
+    this.resetFields();
+  }
+
+  handleFieldChange = (e, field) => {
+    const { value } = e.target;
+    const newState = {};
+    newState[field] = value;
+    this.setState(newState);
+    this.validateField(field, value);
+  }
+
+  handleModeChange = () => {
+    const { signInModalMode, changeSignInMode } = this.props;
+    if (signInModalMode === SignInModalMode.SignIn) {
+      changeSignInMode(SignInModalMode.SignUp);
+    } else {
+      changeSignInMode(SignInModalMode.SignIn);
+    }
+  }
+
+  validateField = (field, value) => {
+    const errField = `${field}Err`;
+    const newState = {};
+    if (!value) {
+      newState[errField] = 'This field is empty';
+      this.setState(newState);
+    } else if (field === 'confirmPassword') {
+      const { password } = this.state;
+      if (password !== value) {
+        newState[errField] = 'Password does not match';
+        this.setState(newState);
+      }
+    } else if (field === 'confirmEmail') {
+      const { email } = this.state;
+      if (email !== value) {
+        newState[errField] = 'Email does not match';
+        this.setState(newState);
+      }
+    }
+    if (!newState[errField]) {
+      newState[errField] = '';
+      this.setState(newState);
+    }
+  }
+
+  resetFields = () => {
     this.setState({
       firstName: '',
       lastName: '',
@@ -83,22 +157,6 @@ class SignInModal extends Component {
       passwordErr: '',
       confirmPasswordErr: '',
     });
-  }
-
-  handleFieldChange = (e, field) => {
-    const { value } = e.target;
-    const newState = {};
-    newState[field] = value;
-    this.setState(newState);
-  }
-
-  handleModeChange = () => {
-    const { signInModalMode, changeSignInMode } = this.props;
-    if (signInModalMode === SignInModalMode.SignIn) {
-      changeSignInMode(SignInModalMode.SignUp);
-    } else {
-      changeSignInMode(SignInModalMode.SignIn);
-    }
   }
 
   render() {
@@ -235,6 +293,7 @@ class SignInModal extends Component {
               variant="contained"
               color="primary"
               onClick={this.handleButtonClick}
+              disabled={isLoading}
             >
               { isSignUp ? 'Sign Up' : 'Sign In' }
             </Button>

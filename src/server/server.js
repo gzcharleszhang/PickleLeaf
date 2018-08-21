@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -12,6 +13,8 @@ mongoose.Promise = require('bluebird');
 const router = require('./routes/routes.js');
 
 app.use(morgan('dev'));
+
+app.use(cors());
 
 app.set('view engine', 'html');
 if (process.env.NODE_ENV === 'production') {
@@ -25,8 +28,10 @@ if (process.env.NODE_ENV === 'production') {
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 
-mongoose.connect(process.env.MONGO_URL, { promiseLibrary: require('bluebird') })
-  .then(() => console.log('successfully connected to mongo'))
+mongoose.connect(process.env.MONGO_URL, {
+  promiseLibrary: require('bluebird'),
+  useNewUrlParser: true,
+}).then(() => console.log('successfully connected to mongo'))
   .catch(err => console.log(err));
 
 app.use('/api', router);

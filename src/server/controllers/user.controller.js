@@ -1,6 +1,5 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const shortid = require('shortid');
 const settings = require('../settings');
 const { UserModel } = require('../models/user');
 require('../passport')(passport);
@@ -22,7 +21,6 @@ module.exports = {
     } else {
       const name = `${firstName} ${lastName}`;
       const newUser = new UserModel({
-        _id: shortid.generate(),
         email,
         password,
         firstName,
@@ -34,7 +32,7 @@ module.exports = {
           res.json({ success: true, msg: 'Successfully created user' });
         })
         .catch((error) => {
-          res.json({ ...error, success: false, msg: 'User already exists' });
+          res.json({ error, success: false, msg: 'User Already Exists' });
         });
     }
   },

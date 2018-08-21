@@ -1,4 +1,4 @@
-import { makeConstantsObject } from 'client/redux/util';
+import { makeConstantsObject } from 'client/util/Util';
 
 const ActionTypes = {
   SHOW_SIGN_IN_MODAL: '',

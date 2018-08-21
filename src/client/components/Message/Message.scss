@@ -1,0 +1,16 @@
+.snack-bar-content {
+  color: white;
+  &.Success {
+    background-color: #357a38;
+  }
+  &.Error {
+    background-color: #aa2e25;
+  }
+  &.Info {
+    background-color: #1769aa;
+  }
+  &.Warning {
+    background-color: #fbc02d;
+    color: black;
+  }
+}
