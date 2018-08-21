@@ -26,34 +26,39 @@ const userSchema = new Schema({
   _type: String,
 });
 
-userSchema.pre('save', (next) => {
-  const user = this;
-  console.log(user);
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    bcrypt.hash(user.password, salt, null, (e, hash) => {
-      if (e) {
-        next(e);
+// eslint-disable-next-line
+userSchema.pre('save', function (next) {
+  console.log(this);
+  if (this.isNew) {
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        next(err);
         return;
       }
-      user.password = hash;
-      next();
+      bcrypt.hash(this.password, salt, null, (e, hash) => {
+        if (e) {
+          next(e);
+          return;
+        }
+        this.password = hash;
+        next();
+      });
     });
-  });
+  }
 });
 
-userSchema.methods.comparePassword = password => new Promise(
-  (resolve, reject) => {
-    bcrypt.compare(password, this.password, (err, isMatch) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(isMatch);
+// eslint-disable-next-line
+userSchema.methods.comparePassword = function (password) {
+  return new Promise(
+    (resolve, reject) => {
+      bcrypt.compare(password, this.password, (err, isMatch) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(isMatch);
+      });
     });
-  });
+};
 
 
 const UserModel = mongoose.model('User', userSchema);
