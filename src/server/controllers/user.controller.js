@@ -73,4 +73,20 @@ module.exports = {
         });
     }
   },
+
+  checkDuplicateEmail: (req, res) => {
+    const { email } = req.params;
+    if (!email) {
+      res.json({ success: false, msg: 'Missing parameter: email' });
+    }
+
+    UserModel.findOne({ email })
+      .then((user) => {
+        if (!user) {
+          res.json({ success: true, msg: 'Email does not exist' });
+        } else {
+          res.json({ success: false, msg: 'Email already exists' });
+        }
+      });
+  },
 };

@@ -7,4 +7,6 @@ router.post('/register', UserController.register);
 
 router.post('/login', UserController.login);
 
+router.post('/check-duplicate-email/:email', UserController.checkDuplicateEmail);
+
 module.exports = router;

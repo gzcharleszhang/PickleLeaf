@@ -10,6 +10,7 @@ import SignInModalContainer from 'client/containers/SignInModalContainer';
 import { SignInModalMode, MessageTypes } from 'common/constants';
 import { registerUser } from 'client/util/Auth';
 import { showMessage } from 'client/components/Message/Message';
+import apiRequest from 'client/util/ApiRequest';
 import './SignInModal.scss';
 
 class SignInModal extends Component {
@@ -35,6 +36,7 @@ class SignInModal extends Component {
       password: '',
       confirmPassword: '',
       showPassword: false,
+      showConfirmPassword: false,
       isLoading: false,
       firstNameErr: '',
       lastNameErr: '',
@@ -56,15 +58,19 @@ class SignInModal extends Component {
     let valid = true;
     fieldsToCheck.forEach((key) => {
       // eslint-disable-next-line react/destructuring-assignment
+      const errKey = `${key}Err`;
       const field = this.state[key];
       if (!field) {
-        const errKey = `${key}Err`;
         newState[errKey] = 'This field is empty';
+        valid = false;
+      }
+      if (this.state[errKey]) {
         valid = false;
       }
     });
     if (!valid) {
       this.setState(newState);
+      showMessage(MessageTypes.Error, 'Make sure all the fields are valid');
     } else if (isSignUp) {
       this.setState({ isLoading: true });
       const {
@@ -118,6 +124,8 @@ class SignInModal extends Component {
   validateField = (field, value) => {
     const errField = `${field}Err`;
     const newState = {};
+    const { signInModalMode } = this.props;
+    const isSignUp = signInModalMode === SignInModalMode.SignUp;
     if (!value) {
       newState[errField] = 'This field is empty';
       this.setState(newState);
@@ -132,6 +140,21 @@ class SignInModal extends Component {
       if (email !== value) {
         newState[errField] = 'Email does not match';
         this.setState(newState);
+      }
+    } else if (field === 'email' && isSignUp) {
+      const regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+      if (!regex.test(value)) {
+        newState[errField] = 'Not a valid email address';
+        this.setState(newState);
+      } else {
+        apiRequest.post(`/users/check-duplicate-email/${value}`)
+          .then((res) => {
+            const { success } = res.data;
+            if (!success) {
+              newState[errField] = 'Email already exists';
+              this.setState(newState);
+            }
+          });
       }
     }
     if (!newState[errField]) {
@@ -149,6 +172,7 @@ class SignInModal extends Component {
       password: '',
       confirmPassword: '',
       showPassword: false,
+      showConfirmPassword: false,
       isLoading: false,
       firstNameErr: '',
       lastNameErr: '',
@@ -163,7 +187,7 @@ class SignInModal extends Component {
     const { isSignInModalVisible, signInModalMode } = this.props;
     const {
       firstName, lastName, email, password, showPassword,
-      isLoading, firstNameErr, lastNameErr,
+      isLoading, firstNameErr, lastNameErr, showConfirmPassword,
       emailErr, confirmEmailErr, confirmPasswordErr,
       confirmEmail, confirmPassword, passwordErr,
     } = this.state;
@@ -280,8 +304,20 @@ class SignInModal extends Component {
                 </InputLabel>
                 <Input
                   id="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={e => this.handleFieldChange(e, 'confirmPassword')}
+                  endAdornment={(
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="Toggle confirm password visibility"
+                        onClick={() => this.setState({ showConfirmPassword: !showConfirmPassword })}
+                        onMouseDown={e => e.preventDefault()}
+                      >
+                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  )}
                 />
                 <FormHelperText>{confirmPasswordErr}</FormHelperText>
               </FormControl>
