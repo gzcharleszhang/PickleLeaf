@@ -1,6 +1,6 @@
 import axios from 'axios';
-import History from 'client/util/History';
 import { getAuthHeaders } from 'client/util/Auth';
+import { showMessage } from 'client/components/Message/Message';
 
 const API_URL = 'http://localhost:8000/api';
 
@@ -25,15 +25,15 @@ export default {
 
   _handleError(err) {
     if (err && err.response) {
-      if (err.response.status === 403) {
-        console.log('Unauthorized, please sign in.');
-        History.replace('/login');
+      if (err.response.status === 401) {
+        showMessage('Error', 'authentication failed');
       } else {
-        console.log(err.response.data);
+        showMessage('Error', err.response.data.message);
       }
     } else {
       console.log(err.message.toString());
     }
+
     throw err;
   },
 };

@@ -92,7 +92,7 @@ class SignInModal extends Component {
         } else {
           showMessage(MessageTypes.Error, 'User already exists');
         }
-      });
+      }).catch(e => console.log(e.response.data.message));
     }
   }
 

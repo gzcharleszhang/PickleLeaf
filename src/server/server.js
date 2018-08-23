@@ -12,6 +12,12 @@ const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 const router = require('./routes/routes.js');
 
+const port = 8000;
+
+app.listen(port, () => {
+  console.log(`running at localhost: ${port}`);
+});
+
 app.use(morgan('dev'));
 
 app.use(cors());
@@ -36,22 +42,19 @@ mongoose.connect(process.env.MONGO_URL, {
 
 app.use('/api', router);
 
+// eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
+  let { message, statusCode } = err;
+  if (!message) {
+    message = 'Server Error';
   }
-
-  res.status(500);
-  res.render('error', { error: err });
-  return null;
+  if (!statusCode) {
+    statusCode = 500;
+  }
+  console.log('asdf');
+  res.status(statusCode).json({ message, statusCode });
 };
 
 app.use(errorHandler);
-
-const port = 8000;
-
-app.listen(port, () => {
-  console.log(`running at localhost: ${port}`);
-});
 
 module.exports = app;
