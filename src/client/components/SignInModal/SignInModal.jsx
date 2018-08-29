@@ -8,7 +8,6 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import SignInModalContainer from 'client/containers/SignInModalContainer';
 import { SignInModalMode, MessageTypes } from 'common/constants';
-import { registerUser } from 'client/util/Auth';
 import { showMessage } from 'client/components/Message/Message';
 import apiRequest from 'client/util/ApiRequest';
 import './SignInModal.scss';
@@ -19,6 +18,7 @@ class SignInModal extends Component {
     hideSignInModal: PropTypes.func.isRequired,
     signInModalMode: PropTypes.string.isRequired,
     changeSignInMode: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
     onClose: PropTypes.func,
   }
 
@@ -48,7 +48,7 @@ class SignInModal extends Component {
   }
 
   handleButtonClick = () => {
-    const { signInModalMode, hideSignInModal } = this.props;
+    const { signInModalMode, hideSignInModal, register } = this.props;
     const isSignUp = signInModalMode === SignInModalMode.SignUp;
     let fieldsToCheck = ['email', 'password'];
     if (isSignUp) {
@@ -82,17 +82,12 @@ class SignInModal extends Component {
         email,
         password,
       };
-      registerUser(user).then((res) => {
+      register(user).then(() => {
         this.setState({ isLoading: false });
-        const { success } = res.data;
-        if (success) {
-          showMessage(MessageTypes.Success, 'You have successfully signed up');
-          hideSignInModal();
-          this.resetFields();
-        } else {
-          showMessage(MessageTypes.Error, 'User already exists');
-        }
-      }).catch(e => console.log(e.response.data.message));
+        showMessage(MessageTypes.Success, 'You have successfully signed up');
+        hideSignInModal();
+        this.resetFields();
+      });
     }
   }
 

@@ -29,8 +29,14 @@ module.exports = {
         name,
       });
       newUser.save()
-        .then(() => {
-          res.json({ success: true, msg: 'Successfully created user' });
+        .then((user) => {
+          res.json({
+            _id: user._id,
+            firstName,
+            lastName,
+            name,
+            email,
+          });
         })
         .catch(() => {
           next(new ServerError('User already exists'));
