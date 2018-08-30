@@ -15,7 +15,8 @@ export const login = (email, password) =>
     .then((res) => {
       const {
         token, _id, loginTime, name,
-      } = res;
+      } = res.data;
+      console.log(token);
       localStorage.setItem('jwtToken', token);
       localStorage.setItem('userId', _id);
       localStorage.setItem('loginTime', loginTime);
@@ -28,6 +29,8 @@ export const isAuthenticated = () => {
   return _.every(fields, f => !!localStorage.getItem(f));
 };
 
-export const getAuthHeaders = () => ({
-  authorization: localStorage.getItem('jwtToken'),
-});
+export const getAuthHeaders = () => {
+  const jwt = localStorage.getItem('jwtToken');
+  console.log(jwt);
+  return { jwt };
+};

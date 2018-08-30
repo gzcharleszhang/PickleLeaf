@@ -26,7 +26,7 @@ export default {
   _handleError(err) {
     if (err && err.response) {
       if (err.response.status === 401) {
-        showMessage('Error', err.response.data.message || 'authentication failed');
+        showMessage('Error', err.response.data.message || 'Authentication failed, not signed in');
       } else {
         showMessage('Error', err.response.data.message);
       }

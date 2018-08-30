@@ -61,7 +61,7 @@ module.exports = {
                   res.json({
                     _id: user._id,
                     loginTime: Date.now(),
-                    token: `JWT ${token}`,
+                    token,
                     name: user.name,
                   });
                 } else {
