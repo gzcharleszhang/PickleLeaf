@@ -23,7 +23,10 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  _type: String,
+  _type: {
+    type: String,
+    default: 'User',
+  },
 });
 
 // eslint-disable-next-line

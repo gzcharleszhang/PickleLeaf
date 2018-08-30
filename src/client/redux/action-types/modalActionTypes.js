@@ -4,6 +4,8 @@ const ActionTypes = {
   SHOW_SIGN_IN_MODAL: '',
   HIDE_SIGN_IN_MODAL: '',
   CHANGE_SIGN_IN_MODAL_MODE: '',
+  SHOW_NEW_POSTING_MODAL: '',
+  HIDE_NEW_POSTING_MODAL: '',
 };
 
 makeConstantsObject(ActionTypes);

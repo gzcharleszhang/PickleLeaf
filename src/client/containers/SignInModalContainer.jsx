@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import SignInModalActions from 'client/redux/actions/signInModalActions';
+import ModalActions from 'client/redux/actions/modalActions';
 import UserActions from 'client/redux/actions/userActions';
 import { signInModalSelector } from 'client/redux/selectors/modalSelectors';
 
 const mapStateToProps = state => signInModalSelector(state);
 
 const mapDispatchToProps = dispatch => ({
-  showSignInModal: () => dispatch(SignInModalActions.showModal()),
-  hideSignInModal: () => dispatch(SignInModalActions.hideModal()),
-  changeSignInMode: mode => dispatch(SignInModalActions.changeModalMode(mode)),
+  showSignInModal: () => dispatch(ModalActions.showModal()),
+  hideSignInModal: () => dispatch(ModalActions.hideModal()),
+  changeSignInMode: mode => dispatch(ModalActions.changeModalMode(mode)),
   register: user => dispatch(UserActions.register(user)),
 });
 

@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import userReducers from 'client/redux/reducers/usersReducers';
-import signInModalReducers from 'client/redux/reducers/signInModalReducers';
+import modalReducers from 'client/redux/reducers/modalReducers';
+import bookReducers from 'client/redux/reducers/bookReducers';
 
 export default combineReducers({
   users: userReducers,
-  signInModal: signInModalReducers,
+  books: bookReducers,
+  modals: modalReducers,
 });

@@ -16,7 +16,6 @@ export const login = (email, password) =>
       const {
         token, _id, loginTime, name,
       } = res.data;
-      console.log(token);
       localStorage.setItem('jwtToken', token);
       localStorage.setItem('userId', _id);
       localStorage.setItem('loginTime', loginTime);
@@ -31,6 +30,6 @@ export const isAuthenticated = () => {
 
 export const getAuthHeaders = () => {
   const jwt = localStorage.getItem('jwtToken');
-  console.log(jwt);
-  return { jwt };
+  const userId = localStorage.getItem('userId');
+  return { jwt, userId };
 };

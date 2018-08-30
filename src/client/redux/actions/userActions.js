@@ -1,7 +1,7 @@
 import ActionTypes from 'client/redux/action-types/userActionTypes';
 import apiRequest from 'client/util/ApiRequest';
 
-const SignInModalActions = {
+const UserModalActions = {
   register: user => ({
     types: [
       ActionTypes.REGISTER_REQ,
@@ -13,4 +13,4 @@ const SignInModalActions = {
   }),
 };
 
-export default SignInModalActions;
+export default UserModalActions;

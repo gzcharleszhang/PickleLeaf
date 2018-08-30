@@ -51,7 +51,6 @@ const errorHandler = (err, req, res, next) => {
   if (!statusCode) {
     statusCode = 500;
   }
-  console.log('asdf');
   res.status(statusCode).json({ message, statusCode });
 };
 

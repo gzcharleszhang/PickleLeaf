@@ -1,11 +1,21 @@
 import React from 'react';
+import { Input, Button } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import NewPostingModalContainer from 'client/containers/NewPostingModalContainer';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
+  static propTypes = {
+    createBook: PropTypes.func.isRequired,
+  }
+
   render() {
     return (
-      <h1>
-        sup
-      </h1>
+      <div>
+        <Input onChange={e => this.setState({ isbn: e.target.value })} />
+        <Button onClick={() => this.props.createBook(this.state.isbn)}>Submit</Button>
+      </div>
     );
   }
 }
+
+export default NewPostingModalContainer(Home);
