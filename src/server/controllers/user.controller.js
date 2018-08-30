@@ -52,19 +52,24 @@ module.exports = {
       UserModel.findOne({ email })
         .then((user) => {
           if (!user) {
-            next(new ServerError('User not found', 401));
+            next(new ServerError('email does not exist', 401));
           } else {
             user.comparePassword(password)
               .then((isMatch) => {
                 if (isMatch) {
                   const token = jwt.sign(user.toJSON(), settings.secret);
-                  res.json({ success: true, token: `JWT ${token}` });
+                  res.json({
+                    _id: user._id,
+                    loginTime: Date.now(),
+                    token: `JWT ${token}`,
+                    name: user.name,
+                  });
                 } else {
-                  next(new ServerError('Authentication failed, wrong password', 401));
+                  next(new ServerError('Authentication failed, incorrect password', 401));
                 }
               })
               .catch(() => {
-                next(new ServerError('Authentication failed'));
+                next(new ServerError('Authentication failed, incorrect password'));
               });
           }
         });

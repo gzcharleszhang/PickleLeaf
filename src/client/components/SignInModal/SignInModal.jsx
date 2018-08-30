@@ -10,6 +10,7 @@ import SignInModalContainer from 'client/containers/SignInModalContainer';
 import { SignInModalMode, MessageTypes } from 'common/constants';
 import { showMessage } from 'client/components/Message/Message';
 import apiRequest from 'client/util/ApiRequest';
+import { login } from 'client/util/Auth';
 import './SignInModal.scss';
 
 class SignInModal extends Component {
@@ -87,6 +88,19 @@ class SignInModal extends Component {
         showMessage(MessageTypes.Success, 'You have successfully signed up');
         hideSignInModal();
         this.resetFields();
+      }).catch(() => {
+        this.setState({ isLoading: false });
+      });
+    } else {
+      this.setState({ isLoading: true });
+      const { email, password } = this.state;
+      login(email, password).then(() => {
+        this.setState({ isLoading: false });
+        showMessage(MessageTypes.Success, 'You have successfully signed in');
+        hideSignInModal();
+        this.resetFields();
+      }).catch(() => {
+        this.setState({ isLoading: false });
       });
     }
   }
@@ -176,6 +190,8 @@ class SignInModal extends Component {
       passwordErr: '',
       confirmPasswordErr: '',
     });
+
+    this.props.changeSignInMode(SignInModalMode.SignIn);
   }
 
   render() {
