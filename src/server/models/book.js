@@ -3,26 +3,22 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const bookSchema = new Schema({
-  isbn10: {
-    type: String,
-    unique: true,
-  },
+  isbn10: String,
   isbn: {
     type: String,
     required: true,
     unique: true,
   },
-  publishers: Array,
+  publisher: Array,
   title: {
     type: String,
     required: true,
   },
   authors: Array,
-  publish_date: String,
+  publishedDate: String,
+  image: String,
   imageSmall: String,
-  imageMedium: String,
-  imageLarge: String,
-  numberPages: Number,
+  pageCount: Number,
   _createdOn: {
     type: Date,
     default: Date.now(),

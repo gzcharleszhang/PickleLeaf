@@ -6,4 +6,6 @@ const { authenticate } = require('../util');
 
 router.post('/create/:isbn', authenticate, BookController.create);
 
+router.get('/fetch', BookController.fetch);
+
 module.exports = router;
