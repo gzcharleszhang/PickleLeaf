@@ -9,7 +9,7 @@ const bookSchema = new Schema({
     required: true,
     unique: true,
   },
-  publisher: Array,
+  publisher: String,
   title: {
     type: String,
     required: true,

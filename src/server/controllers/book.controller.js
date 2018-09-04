@@ -40,8 +40,8 @@ module.exports = {
           title,
           authors,
           publishedDate,
-          image: imageLinks.thumbnail,
-          imageSmall: imageLinks.smallThumbnail,
+          image: imageLinks ? imageLinks.thumbnail : null,
+          imageSmall: imageLinks ? imageLinks.smallThumbnail : null,
           pageCount,
           _addedBy,
         });

@@ -24,6 +24,7 @@
     "dotenv": "^6.0.0",
     "eslint-config-airbnb": "^17.0.0",
     "express": "^4.16.3",
+    "file-loader": "^2.0.0",
     "history": "^4.7.2",
     "html-webpack-plugin": "^3.2.0",
     "jsonwebtoken": "^8.3.0",
@@ -41,6 +42,7 @@
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1",
     "shortid": "^2.2.12"
   },
   "devDependencies": {
@@ -62,6 +64,7 @@
     "node-sass": "^4.9.3",
     "redux-devtools": "^3.4.1",
     "sass-loader": "^7.1.0",
+    "url-loader": "^1.1.1",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"

@@ -1,0 +1,17 @@
+import { connect } from 'react-redux';
+import BookActions from 'client/redux/actions/bookActions';
+import { booksSelector, booksByIdSelector } from 'client/redux/selectors/bookSelectors';
+
+const mapStateToProps = state => ({
+  booksbyId: booksByIdSelector(state),
+  books: booksSelector(state),
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchBooks: () => dispatch(BookActions.fetch()),
+});
+
+export default component => connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(component);

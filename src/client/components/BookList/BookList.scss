@@ -1,0 +1,22 @@
+.book-list-paper {
+  width: 70%;
+
+  .book-list-item {
+    .book-image {
+      margin-right: 50px;
+    }
+
+    .book-item-details {
+      display: flex;
+      flex-wrap: wrap;
+
+      .book-title {
+        font-size: 16px;
+        width: 100%;
+      }
+      .book-details-item {
+        margin-right: 30px;
+      }
+    }
+  }
+}
