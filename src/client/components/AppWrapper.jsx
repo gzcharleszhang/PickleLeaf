@@ -10,7 +10,7 @@ class AppWrapper extends Component {
     fetchUsers: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchBooks();
     this.props.fetchUsers();
   }
