@@ -1,16 +1,12 @@
 import { connect } from 'react-redux';
-import BookActions from 'client/redux/actions/bookActions';
-import { booksSelector, booksByIdSelector } from 'client/redux/selectors/bookSelectors';
 import ModalActions from 'client/redux/actions/modalActions';
+import { postingModalSelector } from 'client/redux/selectors/modalSelectors';
 
-const mapStateToProps = state => ({
-  booksbyId: booksByIdSelector(state),
-  books: booksSelector(state),
-});
+const mapStateToProps = state => postingModalSelector(state);
 
 const mapDispatchToProps = dispatch => ({
-  fetchBooks: () => dispatch(BookActions.fetch()),
   showPostingModal: bookId => dispatch(ModalActions.showPostingModal(bookId)),
+  hidePostingModal: () => dispatch(ModalActions.hidePostingModal()),
 });
 
 export default component => connect(

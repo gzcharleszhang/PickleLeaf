@@ -11,6 +11,16 @@ const UserModalActions = {
     payload: user,
     callAPI: () => apiRequest.post('/users/register', user),
   }),
+
+  fetch: () => ({
+    types: [
+      ActionTypes.USER_FETCH_REQ,
+      ActionTypes.USER_FETCH_OK,
+      ActionTypes.USER_FETCH_ERR,
+    ],
+    payload: {},
+    callAPI: () => apiRequest.get('/users/'),
+  }),
 };
 
 export default UserModalActions;

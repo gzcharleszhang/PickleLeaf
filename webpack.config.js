@@ -48,7 +48,6 @@ module.exports = {
     proxy: {
       '/api': 'http://localhost:8000/',
     },
-    open: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

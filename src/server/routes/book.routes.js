@@ -4,8 +4,8 @@ const router = express.Router();
 const BookController = require('../controllers/book.controller');
 const { authenticate } = require('../util');
 
-router.post('/create/:isbn', authenticate, BookController.create);
+router.post('/:isbn', authenticate, BookController.create);
 
-router.get('/fetch', BookController.fetch);
+router.get('/', BookController.fetch);
 
 module.exports = router;

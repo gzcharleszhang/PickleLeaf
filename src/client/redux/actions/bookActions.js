@@ -1,7 +1,7 @@
 import ActionTypes from 'client/redux/action-types/bookActionTypes';
 import apiRequest from 'client/util/ApiRequest';
 
-const SignInModalActions = {
+const BookActions = {
   create: isbn => ({
     types: [
       ActionTypes.BOOK_CREATE_REQ,
@@ -9,7 +9,7 @@ const SignInModalActions = {
       ActionTypes.BOOK_CREATE_ERR,
     ],
     payload: { isbn },
-    callAPI: () => apiRequest.post(`/books/create/${isbn}`),
+    callAPI: () => apiRequest.post(`/books/${isbn}`),
   }),
   fetch: () => ({
     types: [
@@ -18,8 +18,8 @@ const SignInModalActions = {
       ActionTypes.BOOK_FETCH_ERR,
     ],
     payload: {},
-    callAPI: () => apiRequest.get('/books/fetch'),
+    callAPI: () => apiRequest.get('/books'),
   }),
 };
 
-export default SignInModalActions;
+export default BookActions;

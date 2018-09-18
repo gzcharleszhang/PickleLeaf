@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start-client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "start-server": "NODE_ENV=development nodemon ./src/server/server.js",
-    "start": "concurrently \"yarn start-client\" \"yarn start-server\"",
+    "start-server-dev": "NODE_ENV=development nodemon ./src/server/server.js",
+    "start-dev": "concurrently \"yarn start-client\" \"yarn start-server-dev\"",
     "build": "webpack --mode production"
   },
   "dependencies": {

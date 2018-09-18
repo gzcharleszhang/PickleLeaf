@@ -1,36 +1,36 @@
-import ActionTypes from 'client/redux/action-types/userActionTypes';
+import ActionTypes from 'client/redux/action-types/postingActionTypes';
 import { makeIdMap } from 'client/util/Util';
 
 const initialState = {
-  usersById: {},
+  postingById: {},
 };
 
 export default function (state = initialState, action) {
   const { data } = action;
   switch (action.type) {
-    case ActionTypes.REGISTER_REQ:
+    case ActionTypes.POSTING_CREATE_REQ:
       return state;
-    case ActionTypes.REGISTER_SUCCESS:
+    case ActionTypes.POSTING_CREATE_OK:
       return ({
         ...state,
-        usersById: {
-          ...state.usersById,
+        postingsById: {
+          ...state.postingsById,
           [data._id]: data,
         },
       });
-    case ActionTypes.REGISTER_ERROR:
+    case ActionTypes.POSTING_CREATE_ERR:
       return ({
         ...state,
         error: action.err,
       });
-    case ActionTypes.USER_FETCH_REQ:
+    case ActionTypes.POSTING_FETCH_REQ:
       return state;
-    case ActionTypes.USER_FETCH_OK:
+    case ActionTypes.POSTING_FETCH_OK:
       return ({
         ...state,
-        usersById: makeIdMap(data),
+        postingsById: makeIdMap(data),
       });
-    case ActionTypes.USER_FETCH_ERR:
+    case ActionTypes.POSTING_FETCH_ERR:
       return ({
         ...state,
         error: action.err,

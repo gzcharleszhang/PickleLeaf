@@ -3,8 +3,9 @@ import { SignInModalMode } from 'common/constants';
 
 const initialState = {
   isSignInModalVisible: false,
-  isNewPostingModalVisible: false,
+  isPostingModalVisible: false,
   signInModalMode: SignInModalMode.SignIn,
+  bookId: '',
 };
 
 export default function (state = initialState, action) {
@@ -24,6 +25,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         signInModalMode: payload.mode,
+      };
+    case ActionTypes.SHOW_POSTING_MODAL:
+      return {
+        ...state,
+        isPostingModalVisible: true,
+        bookId: payload.bookId,
+      };
+    case ActionTypes.HIDE_POSTING_MODAL:
+      return {
+        ...state,
+        isPostingModalVisible: false,
+        bookId: '',
       };
     default:
       return state;

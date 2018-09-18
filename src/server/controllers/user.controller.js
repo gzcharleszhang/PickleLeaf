@@ -91,4 +91,14 @@ module.exports = {
         }
       });
   },
+
+  fetch: (req, res, next) => {
+    UserModel.find({})
+      .then((users) => {
+        res.json(users);
+      })
+      .catch(() => {
+        next(new ServerError('Cannot find users'));
+      });
+  },
 };

@@ -1,6 +1,6 @@
 import ActionTypes from 'client/redux/action-types/modalActionTypes';
 
-const SignInModalActions = {
+const ModalActions = {
   showModal: () => ({
     type:
       ActionTypes.SHOW_SIGN_IN_MODAL,
@@ -14,14 +14,14 @@ const SignInModalActions = {
     type: ActionTypes.CHANGE_SIGN_IN_MODAL_MODE,
     payload: { mode },
   }),
-  showNewPostingModal: userId => ({
-    type: ActionTypes.SHOW_NEW_POSTING_MODAL,
-    payload: { userId },
+  showPostingModal: bookId => ({
+    type: ActionTypes.SHOW_POSTING_MODAL,
+    payload: { bookId },
   }),
-  hideNewPostingModal: () => ({
-    type: ActionTypes.HIDE_NEW_POSTING_MODAL,
+  hidePostingModal: () => ({
+    type: ActionTypes.HIDE_POSTING_MODAL,
     payload: {},
   }),
 };
 
-export default SignInModalActions;
+export default ModalActions;

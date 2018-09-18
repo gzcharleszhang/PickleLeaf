@@ -1,7 +1,7 @@
 import React from 'react';
-import { Input, Button, Paper } from '@material-ui/core';
+import { Input, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import NewPostingModalContainer from 'client/containers/NewPostingModalContainer';
+import NewPostingModalContainer from 'client/containers/PostingModalContainer';
 import BookList from 'client/components/BookList/BookList';
 
 class Home extends React.Component {
@@ -14,9 +14,7 @@ class Home extends React.Component {
       <div>
         <Input onChange={e => this.setState({ isbn: e.target.value })} />
         <Button onClick={() => this.props.createBook(this.state.isbn)}>Submit</Button>
-        <Paper className="book-list-paper">
-          <BookList />
-        </Paper>
+        <BookList />
       </div>
     );
   }
