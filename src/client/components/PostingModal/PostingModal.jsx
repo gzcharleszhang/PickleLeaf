@@ -9,9 +9,13 @@ import './PostingModal.scss';
 
 class PostingModal extends React.Component {
   static propTypes = {
-    book: PropTypes.object.isRequired,
+    book: PropTypes.object,
     isPostingModalVisible: PropTypes.bool.isRequired,
     hidePostingModal: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    book: null,
   }
 
   handleClose = () => {
@@ -26,7 +30,7 @@ class PostingModal extends React.Component {
         open={isPostingModalVisible}
         onClose={this.handleClose}
       >
-        <div>{book.title}</div>
+        <div>{book ? book.title : 'hi'}</div>
       </Dialog>
     );
   }

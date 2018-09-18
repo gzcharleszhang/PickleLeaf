@@ -3,6 +3,7 @@ import { makeIdMap } from 'client/util/Util';
 
 const initialState = {
   booksById: {},
+  isLoading: false,
 };
 
 export default function (state = initialState, action) {
@@ -24,16 +25,21 @@ export default function (state = initialState, action) {
         error: action.err,
       });
     case ActionTypes.BOOK_FETCH_REQ:
-      return state;
+      return ({
+        ...state,
+        isLoading: true,
+      });
     case ActionTypes.BOOK_FETCH_OK:
       return ({
         ...state,
         booksById: makeIdMap(data),
+        isLoading: false,
       });
     case ActionTypes.BOOK_FETCH_ERR:
       return ({
         ...state,
         error: action.err,
+        isLoading: false,
       });
     default:
       return state;

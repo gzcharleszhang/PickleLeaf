@@ -1,6 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
+import { CircularProgress } from '@material-ui/core';
 import SignInModal from 'client/components/SignInModal/SignInModal';
 import PostingModal from 'client/components/PostingModal/PostingModal';
 import Message from 'client/components/Message/Message';
@@ -9,16 +10,16 @@ import Home from './Home';
 
 class Main extends React.Component {
   static propTypes = {
-    fetchBooks: PropTypes.func.isRequired,
-    fetchUsers: PropTypes.func.isRequired,
-  }
-
-  componentWillMount() {
-    this.props.fetchBooks();
-    this.props.fetchUsers();
+    isLoading: PropTypes.bool.isRequired,
   }
 
   render() {
+    if (this.props.isLoading) {
+      return (
+        <CircularProgress size={24} />
+      );
+    }
+
     return (
       <div className="main-root">
         <Message />

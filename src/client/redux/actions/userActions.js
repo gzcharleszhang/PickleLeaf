@@ -19,7 +19,7 @@ const UserModalActions = {
       ActionTypes.USER_FETCH_ERR,
     ],
     payload: {},
-    callAPI: () => apiRequest.get('/users/'),
+    callAPI: () => apiRequest.get('/users'),
   }),
 };
 

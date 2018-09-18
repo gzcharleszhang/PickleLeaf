@@ -3,6 +3,7 @@ import { makeIdMap } from 'client/util/Util';
 
 const initialState = {
   usersById: {},
+  isLoading: false,
 };
 
 export default function (state = initialState, action) {
@@ -24,16 +25,21 @@ export default function (state = initialState, action) {
         error: action.err,
       });
     case ActionTypes.USER_FETCH_REQ:
-      return state;
+      return ({
+        ...state,
+        isLoading: true,
+      });
     case ActionTypes.USER_FETCH_OK:
       return ({
         ...state,
         usersById: makeIdMap(data),
+        isLoading: false,
       });
     case ActionTypes.USER_FETCH_ERR:
       return ({
         ...state,
         error: action.err,
+        isLoading: false,
       });
     default:
       return state;

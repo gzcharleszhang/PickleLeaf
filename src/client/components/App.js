@@ -4,9 +4,8 @@ import makeStore from 'client/redux/store';
 import axios from 'axios';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { teal } from '@material-ui/core/colors';
-import TopBar from 'client/components/TopBar/TopBar';
 import '../App.css';
-import Main from './Main';
+import AppWrapper from './AppWrapper';
 
 const store = makeStore();
 
@@ -28,10 +27,7 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
-          <div className="App">
-            <TopBar />
-            <Main />
-          </div>
+          <AppWrapper {...this.props} />
         </Provider>
       </MuiThemeProvider>
     );
