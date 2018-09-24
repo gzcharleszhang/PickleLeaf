@@ -33,3 +33,17 @@ export const getAuthHeaders = () => {
   const userId = localStorage.getItem('userId');
   return { jwt, userId };
 };
+
+export const getCurrentUser = () => {
+  const userId = localStorage.getItem('userId');
+  const userName = localStorage.getItem('userName');
+  const userEmail = localStorage.getItem('userEmail');
+  const loginTime = localStorage.getItem('loginTime');
+
+  return {
+    userId,
+    userName,
+    userEmail,
+    loginTime,
+  };
+};

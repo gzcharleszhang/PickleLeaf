@@ -9,7 +9,7 @@ const PostingActions = {
       ActionTypes.POSTING_CREATE_ERR,
     ],
     payload: { posting },
-    callAPI: () => apiRequest.post('/books/create', posting),
+    callAPI: () => apiRequest.post('/postings', posting),
   }),
   fetch: () => ({
     types: [
@@ -18,7 +18,7 @@ const PostingActions = {
       ActionTypes.POSTING_FETCH_ERR,
     ],
     payload: {},
-    callAPI: () => apiRequest.get('/books/fetch'),
+    callAPI: () => apiRequest.get('/postings'),
   }),
 };
 

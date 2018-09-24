@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
-import PostingActions from 'client/redux/actions/postingActions';
 import { postingsSelector } from 'client/redux/selectors/postingSelectors';
+import PostingActions from 'client/redux/actions/postingActions';
 
-const mapStateToProps = state => postingModalSelector(state);
+const mapStateToProps = state => ({
+  postings: postingsSelector(state),
+});
 
 const mapDispatchToProps = dispatch => ({
-  showPostingModal: bookId => dispatch(showPostingModal(bookId)),
-  hidePostingModal: () => dispatch(hidePostingModal()),
+  createPosting: posting => dispatch(PostingActions.create(posting)),
 });
 
 export default component => connect(

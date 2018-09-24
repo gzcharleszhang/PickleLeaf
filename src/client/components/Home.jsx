@@ -6,7 +6,11 @@ import BookList from 'client/components/BookList/BookList';
 
 class Home extends React.Component {
   static propTypes = {
-    createBook: PropTypes.func.isRequired,
+    createBook: PropTypes.func,
+  }
+
+  static defaultProps = {
+    createBook: () => {},
   }
 
   render() {

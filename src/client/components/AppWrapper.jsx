@@ -8,11 +8,13 @@ class AppWrapper extends Component {
   static propTypes = {
     fetchBooks: PropTypes.func.isRequired,
     fetchUsers: PropTypes.func.isRequired,
+    fetchPostings: PropTypes.func.isRequired,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchBooks();
     this.props.fetchUsers();
+    this.props.fetchPostings();
   }
 
   render() {
