@@ -8,7 +8,7 @@ export const postingsSelector = createSelector(
   postingsByIdSelector,
   usersByIdSelector,
   booksByIdSelector,
-  (postingsById, usersById, booksById) => Object.values(postingsById)
+  (postingsById, usersById, booksById) => Object.values(postingsById || {})
     .map(posting => ({
       ...posting,
       user: usersById[posting.userId],

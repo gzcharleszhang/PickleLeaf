@@ -5,10 +5,9 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
   entry: './src/index.js',
   output: {
-    filename: './dist/bundle.js',
+    filename: './bundle.js',
   },
   module: {
     rules: [{

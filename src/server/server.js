@@ -24,10 +24,10 @@ app.use(cors());
 
 app.set('view engine', 'html');
 if (process.env.NODE_ENV === 'production') {
-  app.set('views', path.join(__dirname, '../../public'));
-  app.use(express.static(path.join(__dirname, '../../public')));
+  app.set('views', path.join(__dirname, '../../dist'));
+  app.use(express.static(path.join(__dirname, '../../dist')));
   app.get('/', (req, res) => {
-    res.render('index');
+    res.sendFile(path.join(__dirname, '../../dist/index.html'));
   });
 }
 
