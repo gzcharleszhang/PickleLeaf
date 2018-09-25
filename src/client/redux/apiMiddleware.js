@@ -21,12 +21,14 @@ const apiCall = ({ dispatch }) => next => (action) => {
       type: success,
       data: res.data,
     });
+    return res;
   }).catch((err) => {
     dispatch({
       ...props,
       type: failure,
       err,
     });
+    throw err;
   });
 };
 

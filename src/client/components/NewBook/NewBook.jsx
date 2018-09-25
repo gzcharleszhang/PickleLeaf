@@ -30,15 +30,17 @@ class NewBook extends React.Component {
   handleCreateBook = () => {
     const { isbn } = this.state;
     const { createBook } = this.props;
-    const parsed = Number.parseInt(isbn, 10);
-    if (Number.isNaN(parsed) || !(isIsbn10(isbn) || isIsbn13(isbn))) {
+    const cleanIsbn = isbn.trim().replace(/-/g, '');
+    if (cleanIsbn !== isbn) {
+      this.setState({ isbn: cleanIsbn });
+    }
+    const parsed = Number.parseInt(cleanIsbn, 10);
+    if (Number.isNaN(parsed) || !(isIsbn10(cleanIsbn) || isIsbn13(cleanIsbn))) {
       showMessage('Error', 'Not valid ISBN number');
     } else {
-      createBook(isbn)
-        .then((res) => {
-          if (res) {
-            showMessage('Success', 'Added book to database!');
-          }
+      createBook(cleanIsbn)
+        .then(() => {
+          showMessage('Success', 'Added book to database!');
           this.setState({ isbn: '' });
         });
     }
@@ -52,6 +54,7 @@ class NewBook extends React.Component {
         </Typography>
         <div className="add-book-container">
           <Input
+            value={this.state.isbn}
             onChange={e => this.setState({ isbn: e.target.value })}
             placeholder="ISBN here..."
           />
