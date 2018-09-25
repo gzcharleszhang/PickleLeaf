@@ -116,6 +116,18 @@ class BookList extends React.Component {
 
   render() {
     const { booksToRender, canLoadMore } = this.state;
+    if (booksToRender.length === 0) {
+      return (
+        <Paper className="book-list-paper">
+          <Typography
+            className="empty-text"
+            variant="subheading"
+          >
+            Cannot find this book in the database :(
+          </Typography>
+        </Paper>
+      );
+    }
     return (
       <Paper className="book-list-paper">
         <List className="book-list">

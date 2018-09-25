@@ -1,6 +1,10 @@
 .book-list-paper {
   width: 70%;
 
+  .empty-text {
+    margin-top: 40px;
+  }
+
   .book-list-item {
     cursor: pointer;
     display: flex;
