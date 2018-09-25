@@ -37,8 +37,9 @@ class BookList extends React.Component {
       numBooks = books.length;
       canLoadMore = false;
     }
-    const booksToRender = books.slice(0, numBooks)
-      .filter(b => b.title.toLowerCase().indexOf(searchString) >= 0);
+    const booksToRender = books
+      .filter(b => b.title.toLowerCase().indexOf(searchString) >= 0)
+      .slice(0, numBooks);
     return {
       ...state,
       booksToRender,

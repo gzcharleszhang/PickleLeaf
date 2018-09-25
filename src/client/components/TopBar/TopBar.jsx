@@ -24,7 +24,7 @@ class TopBar extends React.Component {
         <Input
           color="secondary"
           className="search-bar"
-          placeholder="Enter a book name..."
+          placeholder="Enter book title..."
           onChange={this.props.handleSearchChange}
           startAdornment={(
             <InputAdornment>
