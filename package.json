@@ -8,6 +8,7 @@
     "node": ">=9.10.0"
   },
   "scripts": {
+    "heroku-postinstall": "webpack --mode production",
     "start-client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "start-server-dev": "NODE_ENV=development nodemon ./src/server/server.js",
     "start-dev": "concurrently \"yarn start-client\" \"yarn start-server-dev\"",

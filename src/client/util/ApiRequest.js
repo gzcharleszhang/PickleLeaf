@@ -2,7 +2,8 @@ import axios from 'axios';
 import { getAuthHeaders } from 'client/util/Auth';
 import { showMessage } from 'client/components/Message/Message';
 
-const API_URL = `http://localhost:${process.env.PORT || '8000'}/api`;
+const API_URL = process.env.NODE_ENV === 'production'
+  ? 'http://pickleleaf.herokuapp.com/api' : 'http://localhost:8000/api';
 
 export default {
   get(url) {

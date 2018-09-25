@@ -56,7 +56,7 @@ module.exports = {
 
     new webpack.DefinePlugin({
       'process.env': {
-        PORT: JSON.stringify(process.env.PORT),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
   ],

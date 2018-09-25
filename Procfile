@@ -1,1 +1,1 @@
-web: webpack --mode production && NODE_ENV=production nodemon ./src/server/server.js
+web: NODE_ENV=production nodemon ./src/server/server.js
