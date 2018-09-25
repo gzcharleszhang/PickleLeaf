@@ -63,9 +63,9 @@ class BookList extends React.Component {
     return (
       <div
         id={book._id}
+        key={book._id}
       >
         <ListItem
-          key={book._id}
           onClick={() => this.props.showPostingModal(book._id)}
           className="book-list-item"
         >

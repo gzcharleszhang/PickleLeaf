@@ -6,6 +6,7 @@ import {
 import BookListContainer from 'client/containers/BookListContainer';
 import { showMessage } from 'client/components/Message/Message';
 import { isIsbn10, isIsbn13 } from 'common/isbnUtil';
+// import { isAuthenticated } from 'client/util/Auth';
 
 import './NewBook.scss';
 
@@ -34,8 +35,10 @@ class NewBook extends React.Component {
       showMessage('Error', 'Not valid ISBN number');
     } else {
       createBook(isbn)
-        .then(() => {
-          showMessage('Success', 'Added book to database!');
+        .then((res) => {
+          if (res) {
+            showMessage('Success', 'Added book to database!');
+          }
           this.setState({ isbn: '' });
         });
     }
