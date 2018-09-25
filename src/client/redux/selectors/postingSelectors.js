@@ -15,3 +15,11 @@ export const postingsSelector = createSelector(
       book: booksById[posting.bookId],
     })),
 );
+
+export const bookPostingsSelector = (state) => {
+  const postings = postingsSelector(state);
+  if (!state.modals.bookId) {
+    return [];
+  }
+  return postings.filter(p => p.bookId === state.modals.bookId);
+};

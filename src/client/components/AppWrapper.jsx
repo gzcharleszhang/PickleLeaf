@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AppContainer from 'client/containers/AppContainer';
-import TopBar from 'client/components/TopBar/TopBar';
 import Main from './Main';
 
 class AppWrapper extends Component {
@@ -20,7 +19,6 @@ class AppWrapper extends Component {
   render() {
     return (
       <div className="App">
-        <TopBar {...this.props} />
         <Main {...this.props} />
       </div>
     );

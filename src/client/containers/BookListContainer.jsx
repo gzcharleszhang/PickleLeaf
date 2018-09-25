@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchBooks: () => dispatch(BookActions.fetch()),
+  createBook: isbn => dispatch(BookActions.create(isbn)),
   showPostingModal: bookId => dispatch(ModalActions.showPostingModal(bookId)),
 });
 

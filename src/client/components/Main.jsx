@@ -6,7 +6,7 @@ import SignInModal from 'client/components/SignInModal/SignInModal';
 import PostingModal from 'client/components/PostingModal/PostingModal';
 import Message from 'client/components/Message/Message';
 import AppContainer from 'client/containers/AppContainer';
-import Home from './Home';
+import Home from 'client/components/Home';
 
 class Main extends React.Component {
   static propTypes = {
@@ -16,7 +16,7 @@ class Main extends React.Component {
   render() {
     if (this.props.isLoading) {
       return (
-        <CircularProgress size={24} />
+        <CircularProgress className="app-spinner" size={30} />
       );
     }
 

@@ -1,5 +1,5 @@
 body {
-  background-color: #ebeef4;
+  background-color: #26a69a;
 }
 
 .App {
@@ -26,8 +26,12 @@ body {
   font-size: large;
 }
 
-.main-root {
-  margin-top: 50px;
+.app-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0 0 -10px;
+  color: white !important;
 }
 
 @keyframes App-logo-spin {

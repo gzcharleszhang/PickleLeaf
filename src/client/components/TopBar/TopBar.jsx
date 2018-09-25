@@ -1,5 +1,7 @@
 import React from 'react';
-import { AppBar, Typography } from '@material-ui/core';
+import {
+  Typography, Input, InputAdornment, Icon,
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import SignInModalContainer from 'client/containers/SignInModalContainer';
 import { isAuthenticated, logout } from 'client/util/Auth';
@@ -8,13 +10,28 @@ import './TopBar.scss';
 class TopBar extends React.Component {
   static propTypes = {
     showSignInModal: PropTypes.func.isRequired,
+    handleSearchChange: PropTypes.func.isRequired,
   }
 
   render() {
     const { showSignInModal } = this.props;
     const loggedIn = isAuthenticated();
     return (
-      <AppBar className="top-bar-root">
+      <div className="top-bar-root">
+        <h1 className="logo">
+          PickleLeaf
+        </h1>
+        <Input
+          color="secondary"
+          className="search-bar"
+          placeholder="Enter a book name..."
+          onChange={this.props.handleSearchChange}
+          startAdornment={(
+            <InputAdornment>
+              <Icon color="secondary">search</Icon>
+            </InputAdornment>
+          )}
+        />
         {
           loggedIn
             ? (
@@ -36,7 +53,7 @@ class TopBar extends React.Component {
               </Typography>
             )
         }
-      </AppBar>
+      </div>
     );
   }
 }

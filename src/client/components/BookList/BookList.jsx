@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  List, ListItem, Typography, Paper,
+  List, ListItem, Typography, Paper, Divider,
 } from '@material-ui/core';
 import BookListContainer from 'client/containers/BookListContainer';
 import defaultBookImage from 'client/icon-book.jpg';
@@ -9,33 +9,73 @@ import './BookList.scss';
 
 class BookList extends React.Component {
   static propTypes = {
+    // eslint-disable-next-line
     books: PropTypes.array.isRequired,
     showPostingModal: PropTypes.func.isRequired,
+    // eslint-disable-next-line
+    booksPerPage: PropTypes.number,
+  }
+
+  static defaultProps = {
+    booksPerPage: 10,
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      page: 0,
+    };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { page } = state;
+    const { booksPerPage, books, searchString } = props;
+    let numBooks = (page + 1) * booksPerPage;
+    let canLoadMore = true;
+    if (numBooks >= books.length) {
+      numBooks = books.length;
+      canLoadMore = false;
+    }
+    const booksToRender = books.slice(0, numBooks)
+      .filter(b => b.title.toLowerCase().indexOf(searchString) >= 0);
+    return {
+      ...state,
+      booksToRender,
+      canLoadMore,
+    };
+  }
+
+  handleLoadMore = () => {
+    const { page } = this.state;
+    this.setState({ page: page + 1 });
   }
 
   renderAuthors = (authors) => {
     if (!authors || authors.length === 0) {
       return 'N/A';
     }
-    return `${authors[0]}${authors.length > 1 ? 'et al.' : ''}`;
+    return `${authors[0]}${authors.length > 1 ? ' et al.' : ''}`;
   }
 
   // eslint-disable-next-line
   renderBookItem = (book) => {
     return (
-      <Paper
-        key={book._id}
-        className="book-list-paper"
-        onClick={() => this.props.showPostingModal(book._id)}
+      <div
+        id={book._id}
       >
-        <ListItem id={book._id} className="book-list-item">
+        <ListItem
+          key={book._id}
+          onClick={() => this.props.showPostingModal(book._id)}
+          className="book-list-item"
+        >
           {/* eslint-disable-next-line */}
-          <img
-            className="book-image"
-            width="60"
-            height="90"
-            src={book.imageSmall || book.image || defaultBookImage}
-          />
+            <img
+              className="book-image"
+              width="60"
+              height="90"
+              src={book.imageSmall || book.image || defaultBookImage}
+            />
           <div className="book-item-details">
             <Typography
               className="book-title"
@@ -47,42 +87,53 @@ class BookList extends React.Component {
               className="book-details-item"
               variant="body1"
             >
-              Authors: {this.renderAuthors(book.authors)}
+                Authors: {this.renderAuthors(book.authors)}
             </Typography>
             <Typography
               className="book-details-item"
               variant="body1"
             >
-              Page Count: {book.pageCount || 'N/A'}
+                Page Count: {book.pageCount || 'N/A'}
             </Typography>
             <Typography
               className="book-details-item"
               variant="body1"
             >
-              Published By: {book.publisher || 'N/A'}
+                Published By: {book.publisher || 'N/A'}
             </Typography>
             <Typography
               className="book-details-item"
               variant="body1"
             >
-              Published Date: {book.publishedDate || 'N/A'}
+                Published Date: {book.publishedDate || 'N/A'}
             </Typography>
           </div>
         </ListItem>
-      </Paper>
+        <Divider className="divider" />
+      </div>
     );
   }
 
   render() {
-    const { books } = this.props;
+    const { booksToRender, canLoadMore } = this.state;
     return (
-      <div className="book-list-root">
+      <Paper className="book-list-paper">
         <List className="book-list">
           {
-            books.map(book => this.renderBookItem(book))
+            booksToRender.map(book => this.renderBookItem(book))
           }
         </List>
-      </div>
+        {
+          canLoadMore
+          && (
+          <Typography
+            onClick={this.handleLoadMore}
+          >
+            Load More
+          </Typography>
+          )
+        }
+      </Paper>
     );
   }
 }

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { postingsSelector } from 'client/redux/selectors/postingSelectors';
+import { bookPostingsSelector } from 'client/redux/selectors/postingSelectors';
 import PostingActions from 'client/redux/actions/postingActions';
 
-const mapStateToProps = state => ({
-  postings: postingsSelector(state),
+const mapStateToProps = (state, props) => ({
+  postings: bookPostingsSelector(state, props),
 });
 
 const mapDispatchToProps = dispatch => ({

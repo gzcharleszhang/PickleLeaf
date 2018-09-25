@@ -1,27 +1,39 @@
 import React from 'react';
-import { Input, Button } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import NewPostingModalContainer from 'client/containers/PostingModalContainer';
 import BookList from 'client/components/BookList/BookList';
+import NewBook from 'client/components/NewBook/NewBook';
+import TopBar from 'client/components/TopBar/TopBar';
+
+import './Home.scss';
 
 class Home extends React.Component {
-  static propTypes = {
-    createBook: PropTypes.func,
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchString: '',
+    };
   }
 
-  static defaultProps = {
-    createBook: () => {},
+  handleSearchChange = (e) => {
+    const { value } = e.target;
+    const searchString = value.trim().toLowerCase();
+    this.setState({ searchString });
   }
 
   render() {
     return (
       <div>
-        <Input onChange={e => this.setState({ isbn: e.target.value })} />
-        <Button onClick={() => this.props.createBook(this.state.isbn)}>Submit</Button>
-        <BookList />
+        <TopBar
+          handleSearchChange={this.handleSearchChange}
+        />
+        <div className="home-root">
+          <BookList searchString={this.state.searchString} />
+          <div className="home-side">
+            <NewBook />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default NewPostingModalContainer(Home);
+export default Home;

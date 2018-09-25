@@ -29,7 +29,7 @@ class PostingModal extends React.Component {
 
     this.state = {
       amountErr: '',
-      amount: null,
+      amount: '',
     };
   }
 
@@ -78,8 +78,8 @@ class PostingModal extends React.Component {
         open={isPostingModalVisible}
         onClose={this.handleClose}
       >
-        <div>
-          <div>
+        <div className="posting-modal-content">
+          <div className="posting-modal-left">
             <FormControl
               error={!!amountErr}
               className="amount-input"
@@ -97,8 +97,9 @@ class PostingModal extends React.Component {
             </FormControl>
             <Button onClick={this.handleCreatePosting}>Add new posting</Button>
           </div>
-          <div>
+          <div className="posting-modal-right">
             <PostingTable
+              bookId={book._id}
               postings={postings}
             />
           </div>

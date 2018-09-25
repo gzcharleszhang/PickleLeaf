@@ -6,6 +6,18 @@ $mainColor: #009688;
   justify-content: center;
   align-items: center;
 
+  .search-bar {
+    margin-left: 50px;
+    width: 300px;
+    color: white;
+  }
+
+  .logo {
+    font-family: 'Courgette';
+    color: white;
+    margin-left: 10px;
+  }
+
   .login-button {
     color: white;
     font-size: 16px;

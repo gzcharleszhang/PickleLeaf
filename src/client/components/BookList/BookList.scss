@@ -1,10 +1,14 @@
 .book-list-paper {
   width: 70%;
-  margin-top: 10px;
 
   .book-list-item {
     cursor: pointer;
     display: flex;
+    transition: background-color ease-out 0.2s;
+
+    &:hover {
+      background-color: lightgrey;
+    }
 
     .book-item-details {
       margin-left: 50px;
