@@ -12,7 +12,8 @@
     "start-server-dev": "NODE_ENV=development nodemon ./src/server/server.js",
     "start-dev": "concurrently \"yarn start-client\" \"yarn start-server-dev\"",
     "start": "NODE_ENV=production nodemon ./src/server/server.js",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "build-start": "webpack --mode production && NODE_ENV=production nodemon ./src/server/server.js"
   },
   "dependencies": {
     "@material-ui/core": "^1.5.0",

@@ -3,6 +3,7 @@ const path = require('path');
 // eslint-disable-next-line
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+require('dotenv').config();
 
 module.exports = {
   entry: './src/index.js',
@@ -51,6 +52,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        PORT: JSON.stringify(process.env.PORT),
+      },
     }),
   ],
 };
