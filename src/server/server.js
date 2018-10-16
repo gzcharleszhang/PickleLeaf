@@ -34,6 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 
+// Connect to mongo
 mongoose.connect(process.env.MONGO_URL, {
   promiseLibrary: require('bluebird'),
   useNewUrlParser: true,

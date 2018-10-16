@@ -28,6 +28,8 @@ module.exports = {
         lastName,
         name,
       });
+
+      // save user
       newUser.save()
         .then((user) => {
           res.json({
@@ -49,14 +51,17 @@ module.exports = {
     if (!email || !password) {
       res.json({ success: false, msg: 'Missing email and password' });
     } else {
+      // check if user exists by email
       UserModel.findOne({ email })
         .then((user) => {
           if (!user) {
             next(new ServerError('email does not exist', 401));
           } else {
+            // check if password is correct
             user.comparePassword(password)
               .then((isMatch) => {
                 if (isMatch) {
+                  // generate security token for user
                   const token = jwt.sign(user.toJSON(), settings.secret);
                   res.json({
                     _id: user._id,
@@ -69,7 +74,7 @@ module.exports = {
                 }
               })
               .catch(() => {
-                next(new ServerError('Authentication failed, incorrect password'));
+                next(new ServerError('Authentication failed, incorrect password', 401));
               });
           }
         });
@@ -81,7 +86,7 @@ module.exports = {
     if (!email) {
       next(new ServerError('Missing email'));
     }
-
+    // check if any user exists with the same email
     UserModel.findOne({ email })
       .then((user) => {
         if (!user) {
