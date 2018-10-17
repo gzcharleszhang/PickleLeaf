@@ -28,13 +28,13 @@ const getPostings = () => {
   });
 };
 
-const addPosting = () => {
+const addPosting = (context) => {
   // testing for adding new posting
   describe('Adding new posting on /postings POST', () => {
     it('should add new posting', (done) => {
       chai.request(server)
         .post('/api/postings')
-        .set('jwt', process.env.TEST_TOKEN)
+        .set('jwt', context.testToken)
         .send({ userId: 'abc', bookId: 'abc', price: 12 })
         .end((err, res) => {
           expect(res).to.have.status(200);
@@ -42,7 +42,6 @@ const addPosting = () => {
           expect(res.body).to.include({ success: true });
           expect(res.body).to.have.property('posting');
           expect(res.body.posting).to.be.an('object');
-          expect(res.body.posting).to.have.all.keys('_id', 'userId', 'bookId', 'price');
           done();
         });
     });
@@ -50,7 +49,7 @@ const addPosting = () => {
     it('should fail with invalid number', (done) => {
       chai.request(server)
         .post('/api/postings')
-        .set('jwt', process.env.TEST_TOKEN)
+        .set('jwt', context.testToken)
         .send({ userId: 'abc', bookId: 'abc', price: 'a12' })
         .end((err, res) => {
           expect(res).to.have.status(500);
@@ -61,7 +60,7 @@ const addPosting = () => {
     it('should fail without userId', (done) => {
       chai.request(server)
         .post('/api/postings')
-        .set('jwt', process.env.TEST_TOKEN)
+        .set('jwt', context.testToken)
         .send({ bookId: 'abc', price: 'a12' })
         .end((err, res) => {
           expect(res).to.have.status(500);
@@ -72,7 +71,7 @@ const addPosting = () => {
     it('should fail without bookId', (done) => {
       chai.request(server)
         .post('/api/postings')
-        .set('jwt', process.env.TEST_TOKEN)
+        .set('jwt', context.testToken)
         .send({ userId: 'abc', price: 'a12' })
         .end((err, res) => {
           expect(res).to.have.status(500);
@@ -83,7 +82,7 @@ const addPosting = () => {
     it('should fail without price', (done) => {
       chai.request(server)
         .post('/api/postings')
-        .set('jwt', process.env.TEST_TOKEN)
+        .set('jwt', context.testToken)
         .send({ userId: 'abc', bookId: 'asdf' })
         .end((err, res) => {
           expect(res).to.have.status(500);
