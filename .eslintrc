@@ -28,6 +28,7 @@
     "eol-last": 0,
     "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
     "no-console": 0,
+    "no-undef": 0,
     "react/jsx-one-expression-per-line": 0,
     "react/destructuring-assignment": 0,
     "implicit-arrow-linebreak": 0

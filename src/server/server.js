@@ -52,7 +52,7 @@ const errorHandler = (err, req, res, next) => {
   if (!statusCode) {
     statusCode = 500;
   }
-  res.status(statusCode).json({ message, statusCode });
+  res.status(statusCode).json({ message, statusCode, success: false });
 };
 
 app.use(errorHandler);

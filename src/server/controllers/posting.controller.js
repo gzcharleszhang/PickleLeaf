@@ -6,7 +6,7 @@ module.exports = {
   fetch: (req, res, next) => {
     PostingModel.find({})
       .then((postings) => {
-        res.json(postings);
+        res.json({ postings, success: true });
       })
       .catch(() => {
         next(new ServerError('Cannot find postings'));
@@ -38,7 +38,7 @@ module.exports = {
       price: parsedPrice,
     });
     newPosting.save()
-      .then(posting => res.json(posting))
+      .then(posting => res.json({ posting, success: true }))
       .catch(() => next(new ServerError('Cannot create posting')));
   },
 
@@ -62,7 +62,7 @@ module.exports = {
         oldPosting.set({ description });
         return oldPosting.save();
       })
-      .then(newPosting => res.json(newPosting))
+      .then(newPosting => res.json({ posting: newPosting, success: true }))
       .catch(err => next(new ServerError(err.toString())));
   },
 
@@ -78,7 +78,7 @@ module.exports = {
         return deletedPosting.save();
       })
       .then(PostingModel.findByIdAndRemove(postingId))
-      .then(posting => res.json(posting))
+      .then(posting => res.json({ posting, success: true }))
       .catch(err => next(new ServerError(err.toString())));
   },
 };

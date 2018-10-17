@@ -16,7 +16,7 @@ export default function (state = initialState, action) {
         ...state,
         booksById: {
           ...state.booksById,
-          [data._id]: data,
+          [data.book._id]: data.book,
         },
       });
     case ActionTypes.BOOK_CREATE_ERR:
@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
     case ActionTypes.BOOK_FETCH_OK:
       return ({
         ...state,
-        booksById: makeIdMap(data),
+        booksById: makeIdMap(data.books),
         isLoading: false,
       });
     case ActionTypes.BOOK_FETCH_ERR:

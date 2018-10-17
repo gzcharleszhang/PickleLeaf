@@ -16,7 +16,7 @@ export default function (state = initialState, action) {
         ...state,
         postingsById: {
           ...state.postingsById,
-          [data._id]: data,
+          [data.posting._id]: data.posting,
         },
       });
     case ActionTypes.POSTING_CREATE_ERR:
@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
     case ActionTypes.POSTING_FETCH_OK:
       return ({
         ...state,
-        postingsById: makeIdMap(data),
+        postingsById: makeIdMap(data.postings),
         isLoading: false,
       });
     case ActionTypes.POSTING_FETCH_ERR:

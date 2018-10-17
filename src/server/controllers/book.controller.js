@@ -7,7 +7,7 @@ module.exports = {
   fetch: (req, res, next) => {
     BookModel.find({})
       .then((books) => {
-        res.json(books);
+        res.json({ books, success: true });
       })
       .catch(() => {
         next(new ServerError('Cannot find books'));
@@ -50,7 +50,7 @@ module.exports = {
         });
         book.save()
           .then((newBook) => {
-            res.json(newBook);
+            res.json({ book: newBook, success: true });
           })
           .catch((err) => {
             console.log(err);
