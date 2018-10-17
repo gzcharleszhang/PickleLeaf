@@ -28,7 +28,7 @@ const getBooks = () => {
   });
 };
 
-const postBook = () => {
+const addBook = () => {
   // testing for adding new book
   describe('Adding new book on /books POST', () => {
     it('should add book with isbn 10', (done) => {
@@ -84,5 +84,5 @@ const postBook = () => {
 
 module.exports = {
   getBooks,
-  postBook,
+  addBook,
 };

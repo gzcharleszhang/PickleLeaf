@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-const { getBooks, postBook } = require('./tests/book.test');
+const { getBooks, addBook } = require('./tests/book.test');
+const { getPostings, addPosting } = require('./tests/book.test');
 require('./passport')(passport);
 // set the environment to test
 process.env.NODE_ENV = 'test';
@@ -21,7 +22,9 @@ describe('API tests', () => {
   });
 
   getBooks();
-  postBook();
+  addBook();
+  getPostings();
+  addPosting();
 
   // close database connection after tests are done
   after((done) => {
