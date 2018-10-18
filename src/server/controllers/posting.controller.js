@@ -74,10 +74,12 @@ module.exports = {
 
     PostingModel.findById(postingId)
       .then((posting) => {
-        const deletedPosting = new DeletedPostingModel(posting);
+        // take out _id and _createdOn from posting
+        const { _id, _createdOn, ...otherFields } = posting;
+        const deletedPosting = new DeletedPostingModel({ ...otherFields });
         return deletedPosting.save();
       })
-      .then(PostingModel.findByIdAndRemove(postingId))
+      .then(() => PostingModel.findByIdAndRemove(postingId))
       .then(posting => res.json({ posting, success: true }))
       .catch(err => next(new ServerError(err.toString())));
   },

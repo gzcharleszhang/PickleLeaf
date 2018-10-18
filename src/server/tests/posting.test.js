@@ -9,7 +9,7 @@ require('dotenv').config();
 const { expect } = chai;
 chai.use(chaiHttp);
 
-const { FAKE_TOKEN } = require('../util');
+const { FAKE_TOKEN, FAKE_ID } = require('../util');
 
 const getPostings = () => {
   // testing for postings fetch operation
@@ -168,6 +168,49 @@ const updatePosting = (context) => {
           done();
         });
     });
+
+    it('should fail with invalid posting id', (done) => {
+      chai.request(server)
+        .put(`/api/postings/${FAKE_ID}`)
+        .set('jwt', context.testToken)
+        .send({})
+        .end((err, res) => {
+          expect(res).to.have.status(500);
+          done();
+        });
+    });
+  });
+};
+
+const deletePosting = (context) => {
+  describe('Delete posting on /postings DELETE', () => {
+    it('should delete posting given Id', (done) => {
+      chai.request(server)
+        .delete(`/api/postings/${context.testPosting._id}`)
+        .set('jwt', context.testToken)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+          expect(res.body).to.have.property('posting');
+          expect(res.body.posting).to.be.an('object');
+          expect(res.body.posting).to.have.property('price', 100);
+          expect(res.body.posting).to.have.property('userId', context.testPosting.userId);
+          expect(res.body.posting).to.have.property('bookId', context.testPosting.bookId);
+          expect(res.body.posting).to.have.any.keys('_id');
+          done();
+        });
+    });
+
+    it('should fail with invalid jwt token', (done) => {
+      chai.request(server)
+        .delete(`/api/postings/${context.testPosting._id}`)
+        .set('jwt', FAKE_TOKEN)
+        .send({})
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
   });
 };
 
@@ -175,4 +218,5 @@ module.exports = {
   getPostings,
   addPosting,
   updatePosting,
+  deletePosting,
 };

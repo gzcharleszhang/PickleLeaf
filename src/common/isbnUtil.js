@@ -14,7 +14,6 @@ const convertToIsbn13 = (isbn) => {
       sum += num;
     }
   }
-  console.log(sum);
   sum %= 10;
   const lastDigit = sum === 0 ? 0 : 10 - sum;
   return `${isbn12}${lastDigit}`;

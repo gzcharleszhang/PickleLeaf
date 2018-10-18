@@ -15,7 +15,7 @@
     "start": "NODE_ENV=production nodemon ./src/server/server.js",
     "build": "webpack --mode production",
     "build-start": "webpack --mode production && NODE_ENV=production nodemon ./src/server/server.js",
-    "test": "NODE_ENV=test mocha ./src/server/test --exit"
+    "test": "NODE_ENV=test mocha ./src/server/tests/test --exit"
   },
   "dependencies": {
     "@material-ui/core": "^1.5.0",
