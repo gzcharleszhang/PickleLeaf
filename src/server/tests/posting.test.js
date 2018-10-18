@@ -35,13 +35,17 @@ const addPosting = (context) => {
       chai.request(server)
         .post('/api/postings')
         .set('jwt', context.testToken)
-        .send({ userId: 'abc', bookId: 'abc', price: 12 })
+        .send({ userId: 'abc', bookId: 'cba', price: 12 })
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           expect(res.body).to.include({ success: true });
           expect(res.body).to.have.property('posting');
           expect(res.body.posting).to.be.an('object');
+          expect(res.body.posting).to.have.property('price', 12);
+          expect(res.body.posting).to.have.property('userId', 'abc');
+          expect(res.body.posting).to.have.property('bookId', 'cba');
+          expect(res.body.posting).to.have.any.keys('_id');
           done();
         });
     });

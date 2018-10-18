@@ -38,6 +38,10 @@ const addBook = (context) => {
         expect(res.body).to.include({ success: true });
         expect(res.body).to.have.property('book');
         expect(res.body.book).to.be.an('object');
+        expect(res.body.book).to.have.property('title', 'Reinventing Organizations');
+        expect(res.body.book).to.have.property('isbn', '9782960133554');
+        expect(res.body.book).to.have.property('isbn10', '2960133552');
+        expect(res.body.book).to.have.any.keys('_id');
         done();
       });
   });
@@ -52,6 +56,9 @@ const addBook = (context) => {
         expect(res.body).to.include({ success: true });
         expect(res.body).to.have.property('book');
         expect(res.body.book).to.be.an('object');
+        expect(res.body.book).to.have.property('title', 'Cracking the Coding Interview');
+        expect(res.body.book).to.have.property('isbn', '9780984782857');
+        expect(res.body.book).to.have.any.keys('_id');
         done();
       });
   });
