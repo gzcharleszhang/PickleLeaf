@@ -9,6 +9,8 @@ require('dotenv').config();
 const { expect } = chai;
 chai.use(chaiHttp);
 
+const { FAKE_TOKEN } = require('../util');
+
 const getPostings = () => {
   // testing for postings fetch operation
   describe('Get all postings on /postings GET', () => {
@@ -39,7 +41,6 @@ const addPosting = (context) => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res).to.be.json;
-          expect(res.body).to.include({ success: true });
           expect(res.body).to.have.property('posting');
           expect(res.body.posting).to.be.an('object');
           expect(res.body.posting).to.have.property('price', 12);
@@ -93,10 +94,85 @@ const addPosting = (context) => {
           done();
         });
     });
+
+    it('should fail with invalid jwt token', (done) => {
+      chai.request(server)
+        .post('/api/postings')
+        .set('jwt', FAKE_TOKEN)
+        .send({ userId: 'abc', bookId: 'asdf', price: 10 })
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+  });
+};
+
+const updatePosting = (context) => {
+  describe('Update posting on /postings PUT', () => {
+    it('should update posting price', (done) => {
+      chai.request(server)
+        .put(`/api/postings/${context.testPosting._id}`)
+        .set('jwt', context.testToken)
+        .send({ price: '100' })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+          expect(res.body).to.have.property('posting');
+          expect(res.body.posting).to.be.an('object');
+          expect(res.body.posting).to.have.property('price', 100);
+          expect(res.body.posting).to.have.property('userId', context.testPosting.userId);
+          expect(res.body.posting).to.have.property('bookId', context.testPosting.bookId);
+          expect(res.body.posting).to.have.any.keys('_id');
+          done();
+        });
+    });
+
+    it('should update posting description', (done) => {
+      chai.request(server)
+        .put(`/api/postings/${context.testPosting._id}`)
+        .set('jwt', context.testToken)
+        .send({ description: 'test description' })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+          expect(res.body).to.have.property('posting');
+          expect(res.body.posting).to.be.an('object');
+          expect(res.body.posting).to.have.property('price', 100);
+          expect(res.body.posting).to.have.property('userId', context.testPosting.userId);
+          expect(res.body.posting).to.have.property('bookId', context.testPosting.bookId);
+          expect(res.body.posting).to.have.property('description', 'test description');
+          expect(res.body.posting).to.have.any.keys('_id');
+          done();
+        });
+    });
+
+    it('should fail with invalid jwt token', (done) => {
+      chai.request(server)
+        .put(`/api/postings/${context.testPosting._id}`)
+        .set('jwt', FAKE_TOKEN)
+        .send({})
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
+
+    it('should fail with invalid price', (done) => {
+      chai.request(server)
+        .put(`/api/postings/${context.testPosting._id}`)
+        .set('jwt', context.testToken)
+        .send({ price: 'd12' })
+        .end((err, res) => {
+          expect(res).to.have.status(500);
+          done();
+        });
+    });
   });
 };
 
 module.exports = {
   getPostings,
   addPosting,
+  updatePosting,
 };

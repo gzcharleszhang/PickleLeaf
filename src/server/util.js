@@ -22,7 +22,10 @@ const validatePrice = (price) => {
   return returnVal;
 };
 
+const FAKE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfY3JlYXRlZE9uIjoiMjAxOC0wOC0zMFQxOTozOTowMS4yNTlaIiwiX3R5cGUiOiJVc2VyIiwiX2lkIjoiNWI4ODQ5YjE5MWRlZmMxYmY4OTNlZWZiIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkUjNTbEFVLlJPb3JQaG13ZGdGUkVhdUJhMmNKdTFCU3NycUE2NlF6Mkl1QlVNSVE5cVpFamkiLCJmaXJzdE5hbWUiOiJDaGFybGVzIiwibGFzdE5hbWUiOiJaaGFuZyIsIm5hbWUiOiJDaGFybGVzIFpoYW5nIiwiX192IjowLCJpYXQiOjE1Mzk3NDgyMDd9.uzjPy62jCx4y_pei56hH87DSIR7vY68zuSHwNnIUnl8';
+
 module.exports = {
   authenticate,
   validatePrice,
+  FAKE_TOKEN,
 };

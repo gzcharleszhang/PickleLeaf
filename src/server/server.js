@@ -18,7 +18,9 @@ app.listen(port, () => {
   console.log(`running at localhost: ${port}`);
 });
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 app.use(cors());
 

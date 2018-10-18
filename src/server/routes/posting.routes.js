@@ -8,8 +8,8 @@ router.get('/', PostingController.fetch);
 
 router.post('/', authenticate, PostingController.create);
 
-router.put('/:postingId', PostingController.update);
+router.put('/:postingId', authenticate, PostingController.update);
 
-router.delete('/:postingId', PostingController.delete);
+router.delete('/:postingId', authenticate, PostingController.delete);
 
 module.exports = router;
