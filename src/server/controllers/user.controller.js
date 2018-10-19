@@ -1,7 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { ServerError } = require('../error');
-const settings = require('../settings');
 const { UserModel } = require('../models/user');
 require('../passport')(passport);
 
@@ -62,7 +61,7 @@ module.exports = {
               .then((isMatch) => {
                 if (isMatch) {
                   // generate security token for user
-                  const token = jwt.sign(user.toJSON(), settings.secret);
+                  const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET);
                   res.json({
                     _id: user._id,
                     loginTime: Date.now(),
